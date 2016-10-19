@@ -1,0 +1,77 @@
+import shelve
+def createDatabases():
+	#Create Student Database
+	students=shelve.open(getMediaPath("students.db"),"c")
+	row = {'StudentName':'Katie','StudentID':'S1'}
+	students['S1']=row
+	row = {'StudentName':'Brittany','StudentID':'S2'}
+	students['S2']=row
+	row = {'StudentName':'Carrie','StudentID':'S3'}
+	students['S3']=row
+	students.close()
+	#Create Picture Database
+	pictures=shelve.open(getMediaPath("pictures.db"),"c")
+	row = {'Picture':'Class1.jpg','PictureID':'P1'}
+	pictures['P1']=row
+	row = {'Picture':'Class2.jpg','PictureID':'P2'}
+	pictures['P2']=row
+	pictures.close()
+	#Create Picture-Student Database
+	pictures=shelve.open(getMediaPath("pict-students.db"),"c")
+	row = {'PictureID':'P1','StudentID':'S1'}
+	pictures['P1S1']=row
+	row = {'PictureID':'P1','StudentID':'S2'}
+	pictures['P1S2']=row
+	row = {'PictureID':'P2','StudentID':'S3'}
+	pictures['P2S3']=row
+	pictures.close()
+
+def whoInClass1():
+	# Get the pictureID
+	pictures=shelve.open(getMediaPath("pictures.db"),"r")
+	for key in pictures.keys():
+		row = pictures[key]
+		if row['Picture'] == 'Class1.jpg':
+			id = row['PictureID']
+	pictures.close()
+	# Get the students' IDs
+	studentslist=[]
+	pictures=shelve.open(getMediaPath("pict-students.db"),"c")
+	for key in pictures.keys():
+		row = pictures[key]
+		if row['PictureID']==id:
+			studentslist.append(row['StudentID'])
+	pictures.close()
+	print "We're looking for:",studentslist
+	# Get the students' names
+	students = shelve.open(getMediaPath("students.db"),"r")
+	for key in students.keys():
+		row = students[key]
+		if row['StudentID'] in studentslist:
+			print row['StudentName'],"is in the picture"
+	students.close()
+  
+def showSomePersons(con, condition):
+	con.execute("select name, age from Person "+condition)
+	for i in range(0,con.rowcount):
+		results=con.fetchone()
+		print results[0]+" is "+str(results[1])+" years old"
+
+import urllib
+import random
+import anydbm
+
+def makeHomePage(name,interests):
+	file=open(getMediaPath("homepage.html"),"wt")
+	file.write(doctype())
+	file.write(title(name+"'s Home Page"))
+	text = "<h1>Welcome to "+name+"'s Home Page</h1> "
+	text += "<p>Hi!	I am "+name+".	This is my home page!"
+	text += " I am interested in "+interests+"</p>"
+	text += "<p>Random thought for the day: "+tagline()+"</p>"
+	# Import the database content
+	db=anydbm.open(getMediaPath("news"),"r")
+	text += "<h2>Latest news:"+db["headline"]+"</h2>"
+	text += "<p>"+db["story"]+"</p>"
+	file.write(body(text))
+	file.close()
