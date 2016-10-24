@@ -1,0 +1,86 @@
+def playSlideShow():
+	pic = makePicture(getMediaPath("barbara.jpg"))
+	sound = makeSound(getMediaPath("bassoon-c4.wav"))
+	show(pic)
+	blockingPlay(sound)
+	pic = makePicture(getMediaPath("beach.jpg"))
+	sound = makeSound(getMediaPath("bassoon-e4.wav"))
+	show(pic)
+	blockingPlay(sound)
+	pic = makePicture(getMediaPath("church.jpg"))
+	sound = makeSound(getMediaPath("bassoon-g4.wav"))
+	show(pic)
+	blockingPlay(sound)
+	pic = makePicture(getMediaPath("jungle2.jpg"))
+	sound = makeSound(getMediaPath("bassoon-c4.wav"))
+	show(pic)
+	blockingPlay(sound)
+  
+#Program 208
+class Slide:
+	def __init__(self, pictureFile,soundFile):
+		self.picture = makePicture(pictureFile)
+		self.sound = makeSound(soundFile)
+
+	def show(self):
+		show(self.picture)
+		blockingPlay(self.sound)
+    
+#Program 209
+def playSlideShow2():
+	pictF = getMediaPath("barbara.jpg")
+	soundF = getMediaPath("bassoon-c4.wav")
+	slide1 = Slide(pictF,soundF)
+	pictF = getMediaPath("beach.jpg")
+	soundF = getMediaPath("bassoon-e4.wav")
+	slide2 = Slide(pictF,soundF)
+	pictF = getMediaPath("church.jpg")
+	soundF = getMediaPath("bassoon-g4.wav")
+	slide3 = Slide(pictF,soundF)
+	pictF = getMediaPath("jungle2.jpg")
+	soundF = getMediaPath("bassoon-c4.wav")
+	slide4 = Slide(pictF,soundF)
+	slide1.show()
+	slide2.show()
+	slide3.show()
+	slide4.show()
+  
+#Program 210
+def showSlide(aSlide):
+	aSlide.show()
+
+def playSlideShow3():
+	pictF = getMediaPath("barbara.jpg")
+	soundF = getMediaPath("bassoon-c4.wav")
+	slide1 = Slide(pictF,soundF )
+	pictF = getMediaPath("beach.jpg")
+	soundF = getMediaPath("bassoon-e4.wav")
+	slide2 = Slide(pictF,soundF)
+	pictF = getMediaPath("church.jpg")
+	soundF = getMediaPath("bassoon-g4.wav")
+	slide3 = Slide(pictF,soundF)
+	pictF = getMediaPath("jungle2.jpg")
+	soundF = getMediaPath("bassoon-c4.wav")
+	slide4 = Slide(pictF,soundF)
+
+	map(showSlide,[slide1,slide2,slide3,slide4])
+  
+#Program 211
+class Slide:
+	def __init__(self, pictureFile,soundFile):
+		self.setPicture(makePicture(pictureFile))
+		self.setSound(makeSound(soundFile))
+
+	def getPicture(self):
+		return self.picture
+	def getSound(self):
+		return self.sound
+
+	def setPicture(self,newPicture):
+		self.picture = newPicture
+	def setSound(self,newSound):
+		self.sound = newSound
+
+	def show(self):
+		show(self.getPicture())
+		blockingPlay(self.getSound())
