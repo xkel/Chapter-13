@@ -1,0 +1,15 @@
+class MyPicture(Picture):
+	def makeSunset(self):
+		for p in getPixels(self):
+			p.setBlue(int(p.getBlue()*0.7))
+			p.setGreen(int (p.getGreen()*0.7))
+
+class MySound(Sound):
+	def reverse(self):
+		target = Sound(self.getLength())
+		sourceIndex = self.getLength() - 1
+		for targetIndex in range(0,target.getLength()):
+			sourceValue = self.getSampleValueAt(sourceIndex)
+			target.setSampleValueAt(targetIndex,sourceValue)
+			sourceIndex = sourceIndex - 1
+		return target
